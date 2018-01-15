@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category   Magenerds
+ * @package    Magenerds_OptimizeMedia
+ * @author     Mahmood Dhia <m.dhia@techdivision.com>
+ * @copyright  Copyright (c) 2018 TechDivision GmbH (http://www.techdivision.com)
+ * @link       http://www.techdivision.com/
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="Magenerds" translate="label" sortOrder="1000">
+            <label>Magenerds</label>
+        </tab>
+        <section id="optimizemedia" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1"
+                 showInStore="1">
+            <label>OptimizeMedia</label>
+            <tab>Magenerds</tab>
+            <resource>Magenerds_OptimizeMedia::config_optimizemedia</resource>
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
+                <label>General</label>
+                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
+                    <label>Enable module</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+            <group id="image_optimization" translate="label" type="text" sortOrder="20" showInDefault="1"
+                   showInWebsite="1" showInStore="1">
+                <label>Image Optimization</label>
+                <field id="check_mode" translate="label comment" type="select" sortOrder="10" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Check Mode</label>
+                    <source_model>Magenerds\OptimizeMedia\Model\Config\Source\ImageCheckMode</source_model>
+                    <comment>Defines how it should be checked if the image needs to be optimized.</comment>
+                </field>
+                <field id="optimize_wysiwyg_images" translate="label comment" type="select" sortOrder="20"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Optimize Wysiwyg Images</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Optimize all images which uploaded by Wysiwyg</comment>
+                </field>
+            </group>
+            <group id="logging" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
+                <label>Logging</label>
+                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="0"
+                       showInStore="0">
+                    <label>Enable Logging</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
