@@ -1,5 +1,5 @@
 # Magenerds_OptimizeMedia
-It uses [pngquant][1], [optipng][2], [libjpeg][3], [jpegoptim][4] and [jpegoptim][5] for optimize the images so before use it you should install the proper libraries by npm, apt-get or brew.
+The module uses [pngquant][1], [optipng][2], [libjpeg][3], [jpegoptim][4] and [jpegoptim][5] for optimize the images so before use it you should install the proper libraries by npm, apt-get or brew.
 
 [1]: http://pngquant.org/
 [2]: http://optipng.sourceforge.net/

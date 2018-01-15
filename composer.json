@@ -1,6 +1,6 @@
 {
   "name": "magenerds/optimizemedia",
-  "description": "Bla",
+  "description": "Image optimization module for Magento 2. This Module optimize your uploaded images on the fly.",
   "require": {
     "magento/framework": "^100.0.0|^101.0.0",
     "magenerds/dashboard": "^1.0",
