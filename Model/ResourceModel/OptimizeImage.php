@@ -17,6 +17,7 @@
 namespace Magenerds\OptimizeMedia\Model\ResourceModel;
 
 use Magenerds\OptimizeMedia\Helper\OptimizeImage as OptimizeImageHelper;
+use Magenerds\OptimizeMedia\Model\OptimizeImage as OptimizeImageModel;
 use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
 
 class OptimizeImage extends AbstractDb
@@ -26,6 +27,6 @@ class OptimizeImage extends AbstractDb
      */
     protected function _construct()
     {
-        $this->_init(OptimizeImageHelper::TableName, 'image_id');
+        $this->_init(OptimizeImageHelper::TableName, OptimizeImageModel::ID);
     }
 }

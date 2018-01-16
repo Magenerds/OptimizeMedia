@@ -59,7 +59,6 @@ class WysiwygImagesStoragePlugin
      * @param string $targetPath Target directory
      * @param string $type Type of storage, e.g. image, media etc.
      * @return array File info Array
-     * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function aroundUploadFile(MageStorage $subject, callable $proceed, $targetPath, $type = null)
     {

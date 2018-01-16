@@ -17,10 +17,11 @@
 namespace Magenerds\OptimizeMedia\Model\ResourceModel\OptimizeImage;
 
 use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
+use Magenerds\OptimizeMedia\Model\OptimizeImage as OptimizeImageModel;
 
 class Collection extends AbstractCollection
 {
-    protected $_idFieldName = 'image_id';
+    protected $_idFieldName = OptimizeImageModel::ID;
     protected $_eventPrefix = 'magenerds_optimizemedia_image_collection';
     protected $_eventObject = 'image_collection';
 
