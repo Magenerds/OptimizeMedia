@@ -23,7 +23,6 @@ use Magenerds\OptimizeMedia\Model\Config\Source\ImageCheckMode;
 use Magenerds\OptimizeMedia\Model\OptimizeImageRepository;
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Framework\App\Helper\Context;
-use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Filesystem\DirectoryList;
 use Psr\Log\LoggerInterface;
 
@@ -45,12 +44,14 @@ class OptimizeImage extends AbstractHelper
      * @var OptimizeImageRepository
      */
     protected $optimizeImageRepository;
+
     /**
      * Contains the magento root path
      *
      * @var string
      */
     private $magentoRootPath = '';
+
     /**
      * @var LoggerInterface
      */
@@ -115,7 +116,7 @@ class OptimizeImage extends AbstractHelper
             if (!is_null($this->optimizer)) {
                 $this->logger->info('ImageOptimizer initialized');
             } else {
-                $this->logger->error('ImageOptimizer cant initialized');
+                $this->logger->error('ImageOptimizer could not be initialized');
             }
         }
         //</editor-fold>
@@ -126,7 +127,6 @@ class OptimizeImage extends AbstractHelper
      *
      * @param string $absolutePath Absolute file path to image
      * @return bool
-     * @throws NoSuchEntityException
      */
     public function optimize($absolutePath)
     {
@@ -249,7 +249,6 @@ class OptimizeImage extends AbstractHelper
      *
      * @param $absolutePath string Absolute file path to image
      * @return bool
-     * @throws NoSuchEntityException
      */
     public function delete($absolutePath)
     {
