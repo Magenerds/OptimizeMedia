@@ -9,7 +9,7 @@
  */
  -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
     <preference for="Magenerds\OptimizeMedia\Api\OptimizeImageRepositoryInterface"
                 type="Magenerds\OptimizeMedia\Model\OptimizeImageRepository"/>
     <preference for="Magenerds\OptimizeMedia\Api\Data\OptimizeImageInterface"
@@ -17,8 +17,9 @@
     <preference for="Magenerds\OptimizeMedia\Api\Data\OptimizeImageSearchResultInterface"
                 type="Magenerds\OptimizeMedia\Model\OptimizeImageSearchResult"/>
 
+    <type name="ImageOptimizer\OptimizerFactory" shared="true"/>
     <type name="Magento\Cms\Model\Wysiwyg\Images\Storage">
         <plugin name="optimizeMediaWysiwygImagesStoragePlugin"
-                type="Magenerds\OptimizeMedia\Plugin\WysiwygImagesStoragePlugin" sortOrder="10" disabled="false"/>
+                type="Magenerds\OptimizeMedia\Plugin\WysiwygImagesStoragePlugin" sortOrder="10"/>
     </type>
 </config>

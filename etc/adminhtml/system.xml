@@ -41,7 +41,7 @@
                        showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Optimize Wysiwyg Images</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <comment>Optimize all images which uploaded by Wysiwyg</comment>
+                    <comment>Optimize all images which got uploaded by Wysiwyg</comment>
                 </field>
             </group>
             <group id="logging" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1"

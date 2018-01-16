@@ -1,5 +1,11 @@
 <?php
 /**
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
  * @category   Magenerds
  * @package    Magenerds_OptimizeMedia
  * @author     Mahmood Dhia <m.dhia@techdivision.com>
@@ -17,36 +23,22 @@ use Magenerds\OptimizeMedia\Model\Config\Source\ImageCheckMode;
 use Magenerds\OptimizeMedia\Model\OptimizeImageRepository;
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Framework\App\Helper\Context;
-use Magento\Framework\App\ObjectManager;
+use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\Filesystem\DirectoryList;
 use Psr\Log\LoggerInterface;
-
 
 class OptimizeImage extends AbstractHelper
 {
     /**
      * Table name
      */
-    const TableName = 'magenerds_optimizemedia_image';
-    /**
-     * Optimizer singleton instance
-     *
-     * @var Optimizer $instance
-     */
-    static private $instance = null;
-    /**
-     * Contains the magento root path
-     *
-     * @var string
-     */
-    static private $magentoRootPath = '';
-
+    const TABLENAME = 'magenerds_optimizemedia_image';
     /**
      * Config helper
      *
      * @var ConfigHelper
      */
     protected $configHelper;
-
     /**
      * OptimizeImage repository
      *
@@ -54,32 +46,54 @@ class OptimizeImage extends AbstractHelper
      */
     protected $optimizeImageRepository;
     /**
+     * Contains the magento root path
+     *
+     * @var string
+     */
+    private $magentoRootPath = '';
+    /**
      * @var LoggerInterface
      */
     private $logger;
+
+    /**
+     * Optimizer instance
+     *
+     * @var Optimizer
+     */
+    private $optimizer = null;
+
+    /**
+     * @var DirectoryList
+     */
+    private $directoryList;
 
     /**
      * OptimizeImage constructor.
      *
      * @param Context $context
      * @param ConfigHelper $configHelper
-     * @param OptimizeImageRepository $optimizeImageRepository
      * @param LoggerInterface $logger
+     * @param OptimizerFactory $optimizerFactory
+     * @param OptimizeImageRepository $optimizeImageRepository
      */
     public function __construct(
         Context $context,
         ConfigHelper $configHelper,
-        OptimizeImageRepository $optimizeImageRepository,
-        LoggerInterface $logger
+        DirectoryList $directoryList,
+        LoggerInterface $logger,
+        OptimizerFactory $optimizerFactory,
+        OptimizeImageRepository $optimizeImageRepository
     )
     {
         $this->configHelper = $configHelper;
-        $this->optimizeImageRepository = $optimizeImageRepository;
+        $this->directoryList = $directoryList;
         $this->logger = $logger;
+        $this->optimizeImageRepository = $optimizeImageRepository;
 
         // Initialize ImageOptimizer
-        if ($this->configHelper->isModuleEnable() && $this->configHelper->isOptimizeWysiwygImagesEnable() && is_null(self::$instance)) {
-            $this->initializeImageOptimizer();
+        if ($this->configHelper->isModuleEnabled() && $this->configHelper->isOptimizeWysiwygImagesEnabled()) {
+            $this->initializeImageOptimizer($optimizerFactory);
         }
 
         parent::__construct($context);
@@ -88,38 +102,23 @@ class OptimizeImage extends AbstractHelper
     /**
      * Initialize ImageOptimizer
      */
-    private function initializeImageOptimizer()
+    private function initializeImageOptimizer(OptimizerFactory $optimizerFactory)
     {
-        $options = array();
+        // Get Magento root directory
+        $this->magentoRootPath = $this->directoryList->getRoot() . DIRECTORY_SEPARATOR;
 
-        //<editor-fold desc="Check is binaries installed over npm">
-        $objectManager = ObjectManager::getInstance();
-        $directory = $objectManager->get('\Magento\Framework\Filesystem\DirectoryList');
-        self::$magentoRootPath = $directory->getRoot() . DIRECTORY_SEPARATOR;
+        //<editor-fold desc="Initialize optimizer class">
+        /** @var OptimizerFactory $optimizerFactory */
+        $this->optimizer = $optimizerFactory->get();
 
-        $binaryPaths = array(
-            'optipng_bin' => self::$magentoRootPath . 'node_modules' . DIRECTORY_SEPARATOR . 'optipng-bin' . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'optipng',
-            'pngquant_bin' => self::$magentoRootPath . 'node_modules' . DIRECTORY_SEPARATOR . 'pngquant-bin' . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'pngquant',
-            'gifsicle_bin' => self::$magentoRootPath . 'node_modules' . DIRECTORY_SEPARATOR . 'gifsicle' . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'gifsicle',
-            'jpegoptim_bin' => self::$magentoRootPath . 'node_modules' . DIRECTORY_SEPARATOR . 'jpegoptim-bin' . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'jpegoptim',
-            'jpegtran_bin' => self::$magentoRootPath . 'node_modules' . DIRECTORY_SEPARATOR . 'jpegtran-bin' . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'jpegtran'
-        );
-
-        // check image optimize binary is exist
-        foreach ($binaryPaths as $key => $binaryPath) {
-            if (is_file($binaryPath)) {
-                $options[$key] = $binaryPath;
+        if ($this->configHelper->isLoggingEnabled()) {
+            if (!is_null($this->optimizer)) {
+                $this->logger->info('ImageOptimizer initialized');
+            } else {
+                $this->logger->error('ImageOptimizer cant initialized');
             }
         }
         //</editor-fold>
-
-        // Initial optimizer
-        $optimizerFactory = new OptimizerFactory($options);
-        self::$instance = $optimizerFactory->get();
-
-        if ($this->configHelper->isLoggingEnable()) {
-            $this->logger->info('ImageOptimizer initialized');
-        }
     }
 
     /**
@@ -127,17 +126,18 @@ class OptimizeImage extends AbstractHelper
      *
      * @param string $absolutePath Absolute file path to image
      * @return bool
+     * @throws NoSuchEntityException
      */
     public function optimize($absolutePath)
     {
         // check ImageOptimizer is initialized
-        if (is_null(self::$instance)) {
+        if (is_null($this->optimizer)) {
             return false;
         }
 
         // check file exists
         if (!is_file($absolutePath)) {
-            if ($this->configHelper->isLoggingEnable()) {
+            if ($this->configHelper->isLoggingEnabled()) {
                 $this->logger->error('Image in ' . $absolutePath . ' not found');
             }
             return false;
@@ -149,9 +149,9 @@ class OptimizeImage extends AbstractHelper
         // Try to load image information by SearchCriteria
         $optimizeImageRepository = $this->optimizeImageRepository->getByFilePathHash($imagePathHash);
 
-        //<editor-fold desc="Compare with database file information">
-        if (!is_null($optimizeImageRepository) && $this->configHelper->getCheckMode() !== ImageCheckMode::CHECK_DISABLED) {
 
+        //<editor-fold desc="Compare with database file information">
+        if (!is_null($optimizeImageRepository)) {
             switch ($this->configHelper->getCheckMode()) {
                 case ImageCheckMode::CHECK_MODIFIED_TIME:
                     $fileTime = filemtime($absolutePath);
@@ -182,9 +182,9 @@ class OptimizeImage extends AbstractHelper
         //</editor-fold>
 
         try {
-            self::$instance->optimize($absolutePath);
+            $this->optimizer->optimize($absolutePath);
         } catch (Exception $exception) {
-            if ($this->configHelper->isLoggingEnable()) {
+            if ($this->configHelper->isLoggingEnabled()) {
                 $this->logger->error($exception->getMessage());
             }
             return false;
@@ -198,7 +198,7 @@ class OptimizeImage extends AbstractHelper
         //<editor-fold desc="Store file information in the database">
         // if cant find the entry for the file in the database create a new one
         if (is_null($optimizeImageRepository)) {
-            $relativeFilePath = str_replace(self::$magentoRootPath, '', $absolutePath);
+            $relativeFilePath = str_replace($this->magentoRootPath, '', $absolutePath);
             $optimizeImageRepository = $this->optimizeImageRepository->create();
             $optimizeImageRepository->setHashedPath($imagePathHash);
             $optimizeImageRepository->setPath($relativeFilePath);
@@ -223,8 +223,8 @@ class OptimizeImage extends AbstractHelper
         $this->optimizeImageRepository->save($optimizeImageRepository);
         //</editor-fold>
 
-        if ($this->configHelper->isLoggingEnable()) {
-            $this->logger->info('Image ' . $absolutePath . ' optimize');
+        if ($this->configHelper->isLoggingEnabled()) {
+            $this->logger->info('Image ' . $absolutePath . ' has been optimized successfully');
         }
 
         return true;
@@ -238,7 +238,7 @@ class OptimizeImage extends AbstractHelper
      */
     public function getImageIdFromAbsolutePath($absolutePath)
     {
-        $relativeFilePath = str_replace(self::$magentoRootPath, '', $absolutePath);
+        $relativeFilePath = str_replace($this->magentoRootPath, '', $absolutePath);
         $hashedFilePath = md5($relativeFilePath);
 
         return $hashedFilePath;
@@ -249,6 +249,7 @@ class OptimizeImage extends AbstractHelper
      *
      * @param $absolutePath string Absolute file path to image
      * @return bool
+     * @throws NoSuchEntityException
      */
     public function delete($absolutePath)
     {

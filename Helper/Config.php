@@ -6,7 +6,6 @@
  * that is available through the world-wide-web at this URL:
  * http://opensource.org/licenses/osl-3.0.php
  *
- *
  * @category   Magenerds
  * @package    Magenerds_OptimizeMedia
  * @author     Mahmood Dhia <m.dhia@techdivision.com>
@@ -26,7 +25,7 @@ class Config extends AbstractHelper
      *
      * @var string
      */
-    const MODULE_ENABLE = 'optimizemedia/general/enabled';
+    const MODULE_ENABLED = 'optimizemedia/general/enabled';
 
     /**
      * Configuration path for "image_optimization/check_mode"
@@ -47,7 +46,7 @@ class Config extends AbstractHelper
      *
      * @var string
      */
-    const LOGGING_ENABLE = 'optimizemedia/logging/enabled';
+    const LOGGING_ENABLED = 'optimizemedia/logging/enabled';
 
     /**
      * return true if module is enable
@@ -55,9 +54,9 @@ class Config extends AbstractHelper
      * @param string $scope
      * @return bool
      */
-    public function isModuleEnable($scope = ScopeInterface::SCOPE_STORE)
+    public function isModuleEnabled($scope = ScopeInterface::SCOPE_STORE)
     {
-        return boolval($this->scopeConfig->getValue(self::MODULE_ENABLE, $scope));
+        return boolval($this->scopeConfig->getValue(self::MODULE_ENABLED, $scope));
     }
 
     /**
@@ -77,7 +76,7 @@ class Config extends AbstractHelper
      * @param string $scope
      * @return bool
      */
-    public function isOptimizeWysiwygImagesEnable($scope = ScopeInterface::SCOPE_STORE)
+    public function isOptimizeWysiwygImagesEnabled($scope = ScopeInterface::SCOPE_STORE)
     {
         return boolval($this->scopeConfig->getValue(self::OPTIMIZE_WYSIWYG_IMAGES, $scope));
     }
@@ -88,9 +87,9 @@ class Config extends AbstractHelper
      * @param string $scope
      * @return bool
      */
-    public function isLoggingEnable($scope = ScopeInterface::SCOPE_STORE)
+    public function isLoggingEnabled($scope = ScopeInterface::SCOPE_STORE)
     {
-        return boolval($this->scopeConfig->getValue(self::LOGGING_ENABLE, $scope));
+        return boolval($this->scopeConfig->getValue(self::LOGGING_ENABLED, $scope));
     }
 
     /**

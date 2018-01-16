@@ -6,7 +6,6 @@
  * that is available through the world-wide-web at this URL:
  * http://opensource.org/licenses/osl-3.0.php
  *
- *
  * @category   Magenerds
  * @package    Magenerds_OptimizeMedia
  * @author     Mahmood Dhia <m.dhia@techdivision.com>
@@ -27,6 +26,6 @@ class OptimizeImage extends AbstractDb
      */
     protected function _construct()
     {
-        $this->_init(OptimizeImageHelper::TableName, OptimizeImageModel::ID);
+        $this->_init(OptimizeImageHelper::TABLENAME, OptimizeImageModel::ID);
     }
 }

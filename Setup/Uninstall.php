@@ -6,7 +6,6 @@
  * that is available through the world-wide-web at this URL:
  * http://opensource.org/licenses/osl-3.0.php
  *
- *
  * @category   Magenerds
  * @package    Magenerds_OptimizeMedia
  * @author     Mahmood Dhia <m.dhia@techdivision.com>
@@ -31,7 +30,7 @@ class Uninstall implements UninstallInterface
     {
         $setup->startSetup();
 
-        $setup->getConnection()->delete(OptimizeImageHelper::TableName);
+        $setup->getConnection()->delete(OptimizeImageHelper::TABLENAME);
 
         $setup->endSetup();
     }

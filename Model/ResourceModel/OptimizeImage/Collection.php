@@ -6,7 +6,6 @@
  * that is available through the world-wide-web at this URL:
  * http://opensource.org/licenses/osl-3.0.php
  *
- *
  * @category   Magenerds
  * @package    Magenerds_OptimizeMedia
  * @author     Mahmood Dhia <m.dhia@techdivision.com>
@@ -16,15 +15,10 @@
 
 namespace Magenerds\OptimizeMedia\Model\ResourceModel\OptimizeImage;
 
-use Magenerds\OptimizeMedia\Model\OptimizeImage as OptimizeImageModel;
 use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
 
 class Collection extends AbstractCollection
 {
-    protected $_idFieldName = OptimizeImageModel::ID;
-    protected $_eventPrefix = 'magenerds_optimizemedia_image_collection';
-    protected $_eventObject = 'image_collection';
-
     /**
      * Define model & resource model
      */

@@ -6,7 +6,6 @@
  * that is available through the world-wide-web at this URL:
  * http://opensource.org/licenses/osl-3.0.php
  *
- *
  * @category   Magenerds
  * @package    Magenerds_OptimizeMedia
  * @author     Mahmood Dhia <m.dhia@techdivision.com>
@@ -35,7 +34,7 @@ class InstallSchema implements InstallSchemaInterface
         $setup->startSetup();
 
         $table = $setup->getConnection()->newTable(
-            $setup->getTable(OptimizeImageHelper::TableName)
+            $setup->getTable(OptimizeImageHelper::TABLENAME)
         )->addColumn(
             OptimizeImageModel::ID,
             Table::TYPE_INTEGER,
@@ -73,7 +72,7 @@ class InstallSchema implements InstallSchemaInterface
             ['nullable' => true],
             'Contains file crc32 checksum'
         )->addIndex(
-            $setup->getIdxName(OptimizeImageHelper::TableName, [OptimizeImageModel::HASHED_PATH], AdapterInterface::INDEX_TYPE_UNIQUE),
+            $setup->getIdxName(OptimizeImageHelper::TABLENAME, [OptimizeImageModel::HASHED_PATH], AdapterInterface::INDEX_TYPE_UNIQUE),
             [OptimizeImageModel::HASHED_PATH], ['type' => AdapterInterface::INDEX_TYPE_UNIQUE]
         )->setComment(
             'OptimizeImage Table'

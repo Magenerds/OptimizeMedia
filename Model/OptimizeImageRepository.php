@@ -6,7 +6,6 @@
  * that is available through the world-wide-web at this URL:
  * http://opensource.org/licenses/osl-3.0.php
  *
- *
  * @category   Magenerds
  * @package    Magenerds_OptimizeMedia
  * @author     Mahmood Dhia <m.dhia@techdivision.com>
@@ -72,7 +71,6 @@ class OptimizeImageRepository implements OptimizeImageRepositoryInterface
     /**
      * @param int $id
      * @return OptimizeImageInterface|null
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function getById($id)
     {
@@ -89,7 +87,6 @@ class OptimizeImageRepository implements OptimizeImageRepositoryInterface
     /**
      * @param string $imagePathHash
      * @return OptimizeImageInterface|null
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function getByFilePathHash($imagePathHash)
     {
@@ -101,9 +98,7 @@ class OptimizeImageRepository implements OptimizeImageRepositoryInterface
             return null;
         }
 
-        $t = array_values($optimizeImageRepositoryList->getItems());
-
-        return array_shift($t);
+        return $optimizeImageRepositoryList->getItems()->getFirstItem();
     }
 
     /**

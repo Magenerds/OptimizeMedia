@@ -59,12 +59,13 @@ class WysiwygImagesStoragePlugin
      * @param string $targetPath Target directory
      * @param string $type Type of storage, e.g. image, media etc.
      * @return array File info Array
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function aroundUploadFile(MageStorage $subject, callable $proceed, $targetPath, $type = null)
     {
         $result = $proceed($targetPath, $type);
 
-        if ($this->configHelper->isOptimizeWysiwygImagesEnable()) {
+        if ($this->configHelper->isOptimizeWysiwygImagesEnabled()) {
             $this->optimizeImageHelper->optimize($result['path'] . DIRECTORY_SEPARATOR . $result['file']);
         }
 
@@ -78,6 +79,7 @@ class WysiwygImagesStoragePlugin
      * @param callable $proceed File info Array
      * @param string $target File path to be deleted
      * @return $this
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function aroundDeleteFile(MageStorage $subject, callable $proceed, $target)
     {

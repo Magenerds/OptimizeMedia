@@ -6,7 +6,6 @@
  * that is available through the world-wide-web at this URL:
  * http://opensource.org/licenses/osl-3.0.php
  *
- *
  * @category   Magenerds
  * @package    Magenerds_OptimizeMedia
  * @author     Mahmood Dhia <m.dhia@techdivision.com>
@@ -18,13 +17,14 @@ namespace Magenerds\OptimizeMedia\Api;
 
 use Magenerds\OptimizeMedia\Api\Data\OptimizeImageInterface;
 use Magento\Framework\Api\SearchCriteriaInterface;
+use Magento\Framework\Exception\NoSuchEntityException;
 
 interface OptimizeImageRepositoryInterface
 {
     /**
      * @param int $id
      * @return \Magenerds\OptimizeMedia\Api\Data\OptimizeImageInterface
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws NoSuchEntityException
      */
     public function getById($id);
 

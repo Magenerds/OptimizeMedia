@@ -6,7 +6,6 @@
  * that is available through the world-wide-web at this URL:
  * http://opensource.org/licenses/osl-3.0.php
  *
- *
  * @category   Magenerds
  * @package    Magenerds_OptimizeMedia
  * @author     Mahmood Dhia <m.dhia@techdivision.com>
@@ -21,12 +20,12 @@ use Magento\Framework\Api\SearchResultsInterface;
 interface OptimizeImageSearchResultInterface extends SearchResultsInterface
 {
     /**
-     * @return \Magenerds\OptimizeMedia\Api\Data\OptimizeImageInterface[]
+     * @return OptimizeImageInterface[]
      */
     public function getItems();
 
     /**
-     * @param \Magenerds\OptimizeMedia\Api\Data\OptimizeImageInterface[] $items
+     * @param OptimizeImageInterface[] $items
      * @return void
      */
     public function setItems(array $items);
