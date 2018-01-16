@@ -16,8 +16,8 @@
 
 namespace Magenerds\OptimizeMedia\Model;
 
-use Magento\Framework\Api\SearchResults;
 use Magenerds\OptimizeMedia\Api\Data\OptimizeImageSearchResultInterface;
+use Magento\Framework\Api\SearchResults;
 
 class OptimizeImageSearchResult extends SearchResults implements OptimizeImageSearchResultInterface
 {

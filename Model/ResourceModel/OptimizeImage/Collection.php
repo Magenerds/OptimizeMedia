@@ -16,8 +16,8 @@
 
 namespace Magenerds\OptimizeMedia\Model\ResourceModel\OptimizeImage;
 
-use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
 use Magenerds\OptimizeMedia\Model\OptimizeImage as OptimizeImageModel;
+use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
 
 class Collection extends AbstractCollection
 {

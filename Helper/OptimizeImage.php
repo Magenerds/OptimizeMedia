@@ -12,13 +12,13 @@ namespace Magenerds\OptimizeMedia\Helper;
 use Braintree\Exception;
 use ImageOptimizer\Optimizer;
 use ImageOptimizer\OptimizerFactory;
-use Psr\Log\LoggerInterface;
 use Magenerds\OptimizeMedia\Helper\Config as ConfigHelper;
 use Magenerds\OptimizeMedia\Model\Config\Source\ImageCheckMode;
 use Magenerds\OptimizeMedia\Model\OptimizeImageRepository;
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Framework\App\Helper\Context;
 use Magento\Framework\App\ObjectManager;
+use Psr\Log\LoggerInterface;
 
 
 class OptimizeImage extends AbstractHelper
@@ -120,20 +120,6 @@ class OptimizeImage extends AbstractHelper
         if ($this->configHelper->isLoggingEnable()) {
             $this->logger->info('ImageOptimizer initialized');
         }
-    }
-
-    /**
-     * Get image id from $absolutePath
-     *
-     * @param string $absolutePath Absolute file path to image
-     * @return string
-     */
-    public function getImageIdFromAbsolutePath($absolutePath)
-    {
-        $relativeFilePath = str_replace(self::$magentoRootPath, '', $absolutePath);
-        $hashedFilePath = md5($relativeFilePath);
-
-        return $hashedFilePath;
     }
 
     /**
@@ -242,6 +228,20 @@ class OptimizeImage extends AbstractHelper
         }
 
         return true;
+    }
+
+    /**
+     * Get image id from $absolutePath
+     *
+     * @param string $absolutePath Absolute file path to image
+     * @return string
+     */
+    public function getImageIdFromAbsolutePath($absolutePath)
+    {
+        $relativeFilePath = str_replace(self::$magentoRootPath, '', $absolutePath);
+        $hashedFilePath = md5($relativeFilePath);
+
+        return $hashedFilePath;
     }
 
     /**

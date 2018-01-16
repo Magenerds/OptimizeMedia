@@ -29,14 +29,6 @@ class OptimizeImage extends AbstractExtensibleModel implements OptimizeImageInte
     const CRC32 = 'image_crc32';
 
     /**
-     * Define resource model
-     */
-    protected function _construct()
-    {
-        $this->_init(ResourceModel\OptimizeImage::class);
-    }
-
-    /**
      * @return string
      */
     public function getHashedPath()
@@ -119,5 +111,13 @@ class OptimizeImage extends AbstractExtensibleModel implements OptimizeImageInte
     public function setCRC32($crc32)
     {
         $this->setData(self::CRC32, $crc32);
+    }
+
+    /**
+     * Define resource model
+     */
+    protected function _construct()
+    {
+        $this->_init(ResourceModel\OptimizeImage::class);
     }
 }

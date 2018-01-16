@@ -107,33 +107,6 @@ class OptimizeImageRepository implements OptimizeImageRepositoryInterface
     }
 
     /**
-     * @return OptimizeImageInterface
-     */
-    public function create()
-    {
-        return $this->optimizeImageFactory->create();
-    }
-
-    /**
-     * @param OptimizeImageInterface $optimizeImage
-     * @return OptimizeImageInterface
-     */
-    public function save(OptimizeImageInterface $optimizeImage)
-    {
-        $optimizeImage->getResource()->save($optimizeImage);
-        return $optimizeImage;
-    }
-
-    /**
-     * @param OptimizeImageInterface $optimizeImage
-     * @return OptimizeImageInterface
-     */
-    public function delete(OptimizeImageInterface $optimizeImage)
-    {
-        return $optimizeImage->getResource()->delete($optimizeImage);
-    }
-
-    /**
      * @param SearchCriteriaInterface $searchCriteria
      * @return OptimizeImageSearchResult
      */
@@ -202,5 +175,32 @@ class OptimizeImageRepository implements OptimizeImageRepositoryInterface
         $searchResults->setTotalCount($collection->getSize());
 
         return $searchResults;
+    }
+
+    /**
+     * @return OptimizeImageInterface
+     */
+    public function create()
+    {
+        return $this->optimizeImageFactory->create();
+    }
+
+    /**
+     * @param OptimizeImageInterface $optimizeImage
+     * @return OptimizeImageInterface
+     */
+    public function save(OptimizeImageInterface $optimizeImage)
+    {
+        $optimizeImage->getResource()->save($optimizeImage);
+        return $optimizeImage;
+    }
+
+    /**
+     * @param OptimizeImageInterface $optimizeImage
+     * @return OptimizeImageInterface
+     */
+    public function delete(OptimizeImageInterface $optimizeImage)
+    {
+        return $optimizeImage->getResource()->delete($optimizeImage);
     }
 }
