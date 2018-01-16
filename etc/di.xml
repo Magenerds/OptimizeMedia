@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category   Magenerds
+ * @package    Magenerds_OptimizeMedia
+ * @author     Mahmood Dhia <m.dhia@techdivision.com>
+ * @copyright  Copyright (c) 2018 TechDivision GmbH (http://www.techdivision.com)
+ * @link       http://www.techdivision.com/
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <preference for="Magenerds\OptimizeMedia\Api\OptimizeImageRepositoryInterface"
+                type="Magenerds\OptimizeMedia\Model\OptimizeImageRepository"/>
+    <preference for="Magenerds\OptimizeMedia\Api\Data\OptimizeImageInterface"
+                type="Magenerds\OptimizeMedia\Model\OptimizeImage"/>
+    <preference for="Magenerds\OptimizeMedia\Api\Data\OptimizeImageSearchResultInterface"
+                type="Magenerds\OptimizeMedia\Model\OptimizeImageSearchResult"/>
+
+    <type name="ImageOptimizer\OptimizerFactory" shared="true"/>
+    <type name="Magento\Cms\Model\Wysiwyg\Images\Storage">
+        <plugin name="optimizeMediaWysiwygImagesStoragePlugin"
+                type="Magenerds\OptimizeMedia\Plugin\WysiwygImagesStoragePlugin" sortOrder="10"/>
+    </type>
+</config>

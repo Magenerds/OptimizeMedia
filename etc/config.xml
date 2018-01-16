@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category   Magenerds
+ * @package    Magenerds_OptimizeMedia
+ * @author     Mahmood Dhia <m.dhia@techdivision.com>
+ * @copyright  Copyright (c) 2018 TechDivision GmbH (http://www.techdivision.com)
+ * @link       http://www.techdivision.com/
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <optimizemedia>
+            <general>
+                <enabled>1</enabled>
+            </general>
+            <image_optimization>
+                <check_mode>3</check_mode>
+                <optimize_wysiwyg_images>1</optimize_wysiwyg_images>
+            </image_optimization>
+            <logging>
+                <enabled>0</enabled>
+            </logging>
+        </optimizemedia>
+    </default>
+</config>
