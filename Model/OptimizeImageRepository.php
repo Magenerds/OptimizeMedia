@@ -98,7 +98,8 @@ class OptimizeImageRepository implements OptimizeImageRepositoryInterface
             return null;
         }
 
-        return $optimizeImageRepositoryList->getItems()->getFirstItem();
+        $itemValues = array_values($optimizeImageRepositoryList->getItems());
+        return array_shift($itemValues);
     }
 
     /**
