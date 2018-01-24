@@ -24,7 +24,6 @@ use Magenerds\OptimizeMedia\Model\OptimizeImageRepository;
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Framework\App\Helper\Context;
 use Magento\Framework\Filesystem\DirectoryList;
-use Psr\Log\LoggerInterface;
 
 class OptimizeImage extends AbstractHelper
 {
@@ -53,11 +52,6 @@ class OptimizeImage extends AbstractHelper
     private $magentoRootPath = '';
 
     /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
-    /**
      * Optimizer instance
      *
      * @var Optimizer
@@ -74,7 +68,6 @@ class OptimizeImage extends AbstractHelper
      *
      * @param Context $context
      * @param ConfigHelper $configHelper
-     * @param LoggerInterface $logger
      * @param OptimizerFactory $optimizerFactory
      * @param OptimizeImageRepository $optimizeImageRepository
      */
@@ -82,14 +75,12 @@ class OptimizeImage extends AbstractHelper
         Context $context,
         ConfigHelper $configHelper,
         DirectoryList $directoryList,
-        LoggerInterface $logger,
         OptimizerFactory $optimizerFactory,
         OptimizeImageRepository $optimizeImageRepository
     )
     {
         $this->configHelper = $configHelper;
         $this->directoryList = $directoryList;
-        $this->logger = $logger;
         $this->optimizeImageRepository = $optimizeImageRepository;
 
         // Initialize ImageOptimizer
@@ -114,9 +105,9 @@ class OptimizeImage extends AbstractHelper
 
         if ($this->configHelper->isLoggingEnabled()) {
             if (!is_null($this->optimizer)) {
-                $this->logger->info('ImageOptimizer initialized');
+                $this->_logger->info('ImageOptimizer initialized');
             } else {
-                $this->logger->error('ImageOptimizer could not be initialized');
+                $this->_logger->error('ImageOptimizer could not be initialized');
             }
         }
         //</editor-fold>
@@ -138,7 +129,7 @@ class OptimizeImage extends AbstractHelper
         // check file exists
         if (!is_file($absolutePath)) {
             if ($this->configHelper->isLoggingEnabled()) {
-                $this->logger->error('Image in ' . $absolutePath . ' not found');
+                $this->_logger->error('Image in ' . $absolutePath . ' not found');
             }
             return false;
         }
@@ -185,7 +176,7 @@ class OptimizeImage extends AbstractHelper
             $this->optimizer->optimize($absolutePath);
         } catch (Exception $exception) {
             if ($this->configHelper->isLoggingEnabled()) {
-                $this->logger->error($exception->getMessage());
+                $this->_logger->error($exception->getMessage());
             }
             return false;
         }
@@ -224,7 +215,7 @@ class OptimizeImage extends AbstractHelper
         //</editor-fold>
 
         if ($this->configHelper->isLoggingEnabled()) {
-            $this->logger->info('Image ' . $absolutePath . ' has been optimized successfully');
+            $this->_logger->info('Image ' . $absolutePath . ' has been optimized successfully');
         }
 
         return true;
