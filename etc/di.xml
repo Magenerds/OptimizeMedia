@@ -10,6 +10,8 @@
  -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <preference for="Magenerds\OptimizeMedia\Api\Service\OptimizeImageServiceInterface"
+                type="Magenerds\OptimizeMedia\Service\OptimizeImageService"/>
     <preference for="Magenerds\OptimizeMedia\Api\OptimizeImageRepositoryInterface"
                 type="Magenerds\OptimizeMedia\Model\OptimizeImageRepository"/>
     <preference for="Magenerds\OptimizeMedia\Api\Data\OptimizeImageInterface"
