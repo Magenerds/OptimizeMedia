@@ -1,13 +1,16 @@
 <?php
 /**
- * Copyright (c) 2018 Magenerds and TechDivision GmbH
- * All rights reserved
+ * NOTICE OF LICENSE
  *
- * This product includes proprietary software developed at Magenerds, Germany
- * For more information see http://www.magenerds.com/
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
  *
- * To obtain a valid license for using this software please contact us at
- * info@magenerds.com
+ * @category   Magenerds
+ * @package    Magenerds_OptimizeMedia
+ * @author     Mahmood Dhia <m.dhia@techdivision.com>
+ * @copyright  Copyright (c) 2018 TechDivision GmbH (http://www.techdivision.com)
+ * @link       http://www.techdivision.com/
  */
 
 namespace Magenerds\OptimizeImage\Api\Service;
