@@ -13,9 +13,9 @@
  * @link       http://www.techdivision.com/
  */
 
-namespace Magenerds\OptimizeImage\Service;
+namespace Magenerds\OptimizeMedia\Service;
 
-use Magenerds\OptimizeImage\Api\Service\OptimizeImageServiceInterface;
+use Magenerds\OptimizeMedia\Api\Service\OptimizeImageServiceInterface;
 use Magenerds\OptimizeMedia\Helper\OptimizeImage as OptimizeImageHelper;
 
 class OptimizeImageService implements OptimizeImageServiceInterface

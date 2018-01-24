@@ -13,7 +13,7 @@
  * @link       http://www.techdivision.com/
  */
 
-namespace Magenerds\OptimizeImage\Api\Service;
+namespace Magenerds\OptimizeMedia\Api\Service;
 
 /**
  * @copyright  Copyright (c) 2018 Magenerds and TechDivision GmbH (http://www.magenerds.com)
