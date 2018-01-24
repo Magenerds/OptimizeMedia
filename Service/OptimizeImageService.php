@@ -43,6 +43,6 @@ class OptimizeImageService implements OptimizeImageServiceInterface
      */
     public function optimize($absolutePath)
     {
-        return $this->optimize($absolutePath);
+        return $this->optimizeImage->optimize($absolutePath);
     }
 }
