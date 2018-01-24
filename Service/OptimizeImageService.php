@@ -35,10 +35,7 @@ class OptimizeImageService implements OptimizeImageServiceInterface
     }
 
     /**
-     * Optimize Image
-     *
-     * @param string $absolutePath Absolute file path to image
-     * @return bool
+     * {@inheritdoc}
      */
     public function optimize($absolutePath)
     {
