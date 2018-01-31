@@ -15,7 +15,7 @@
 
 namespace Magenerds\OptimizeMedia\Helper;
 
-use Braintree\Exception;
+use Exception;
 use ImageOptimizer\Optimizer;
 use ImageOptimizer\OptimizerFactory;
 use Magenerds\OptimizeMedia\Helper\Config as ConfigHelper;
@@ -31,12 +31,21 @@ class OptimizeImage extends AbstractHelper
      * Table name
      */
     const TABLENAME = 'magenerds_optimizemedia_image';
+
+    /**
+     * A singleton Optimizer instance
+     *
+     * @var Optimizer|null
+     */
+    protected static $optimizerInstance = null;
+
     /**
      * Config helper
      *
      * @var ConfigHelper
      */
     protected $configHelper;
+
     /**
      * OptimizeImage repository
      *
@@ -52,13 +61,6 @@ class OptimizeImage extends AbstractHelper
     private $magentoRootPath = '';
 
     /**
-     * Optimizer instance
-     *
-     * @var Optimizer
-     */
-    private $optimizer = null;
-
-    /**
      * @var DirectoryList
      */
     private $directoryList;
@@ -68,14 +70,13 @@ class OptimizeImage extends AbstractHelper
      *
      * @param Context $context
      * @param ConfigHelper $configHelper
-     * @param OptimizerFactory $optimizerFactory
+     * @param DirectoryList $directoryList
      * @param OptimizeImageRepository $optimizeImageRepository
      */
     public function __construct(
         Context $context,
         ConfigHelper $configHelper,
         DirectoryList $directoryList,
-        OptimizerFactory $optimizerFactory,
         OptimizeImageRepository $optimizeImageRepository
     )
     {
@@ -84,8 +85,8 @@ class OptimizeImage extends AbstractHelper
         $this->optimizeImageRepository = $optimizeImageRepository;
 
         // Initialize ImageOptimizer
-        if ($this->configHelper->isModuleEnabled() && $this->configHelper->isOptimizeWysiwygImagesEnabled()) {
-            $this->initializeImageOptimizer($optimizerFactory);
+        if ($this->configHelper->isModuleEnabled()) {
+            $this->initializeImageOptimizer();
         }
 
         parent::__construct($context);
@@ -94,17 +95,20 @@ class OptimizeImage extends AbstractHelper
     /**
      * Initialize ImageOptimizer
      */
-    private function initializeImageOptimizer(OptimizerFactory $optimizerFactory)
+    private function initializeImageOptimizer()
     {
         // Get Magento root directory
         $this->magentoRootPath = $this->directoryList->getRoot() . DIRECTORY_SEPARATOR;
 
         //<editor-fold desc="Initialize optimizer class">
-        /** @var OptimizerFactory $optimizerFactory */
-        $this->optimizer = $optimizerFactory->get();
+        if(is_null(self::$optimizerInstance)) {
+            /** @var OptimizerFactory $optimizerFactory */
+            $optimizerFactory = new OptimizerFactory();
+            self::$optimizerInstance = $optimizerFactory->get();
+        }
 
         if ($this->configHelper->isLoggingEnabled()) {
-            if (!is_null($this->optimizer)) {
+            if (!is_null(self::$optimizerInstance)) {
                 $this->_logger->info('ImageOptimizer initialized');
             } else {
                 $this->_logger->error('ImageOptimizer could not be initialized');
@@ -122,7 +126,7 @@ class OptimizeImage extends AbstractHelper
     public function optimize($absolutePath)
     {
         // check ImageOptimizer is initialized
-        if (is_null($this->optimizer)) {
+        if (is_null(self::$optimizerInstance)) {
             return false;
         }
 
@@ -173,7 +177,7 @@ class OptimizeImage extends AbstractHelper
         //</editor-fold>
 
         try {
-            $this->optimizer->optimize($absolutePath);
+            self::$optimizerInstance->optimize($absolutePath);
         } catch (Exception $exception) {
             if ($this->configHelper->isLoggingEnabled()) {
                 $this->_logger->error($exception->getMessage());

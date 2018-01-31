@@ -19,7 +19,6 @@
     <preference for="Magenerds\OptimizeMedia\Api\Data\OptimizeImageSearchResultInterface"
                 type="Magenerds\OptimizeMedia\Model\OptimizeImageSearchResult"/>
 
-    <type name="ImageOptimizer\OptimizerFactory" shared="true"/>
     <type name="Magento\Cms\Model\Wysiwyg\Images\Storage">
         <plugin name="optimizeMediaWysiwygImagesStoragePlugin"
                 type="Magenerds\OptimizeMedia\Plugin\WysiwygImagesStoragePlugin" sortOrder="10"/>
