@@ -103,7 +103,11 @@ class OptimizeImage extends AbstractHelper
         //<editor-fold desc="Initialize optimizer class">
         if(is_null(self::$optimizerInstance)) {
             /** @var OptimizerFactory $optimizerFactory */
-            $optimizerFactory = new OptimizerFactory();
+            $optimizerFactory = new OptimizerFactory(array(
+                'jpegoptim_options' => array('--strip-all', '--all-progressive', '-m85'),
+                'pngquant_options' => array('--force', '-Q85'),
+                'jpegtran_bin' => false
+            ));
             self::$optimizerInstance = $optimizerFactory->get();
         }
 
