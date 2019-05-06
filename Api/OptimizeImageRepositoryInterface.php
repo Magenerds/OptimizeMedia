@@ -9,8 +9,8 @@
  * @category   Magenerds
  * @package    Magenerds_OptimizeMedia
  * @author     Mahmood Dhia <m.dhia@techdivision.com>
- * @copyright  Copyright (c) 2018 TechDivision GmbH (http://www.techdivision.com)
- * @link       http://www.techdivision.com/
+ * @copyright  Copyright (c) 2019 TechDivision GmbH (https://www.techdivision.com)
+ * @link       https://www.techdivision.com/
  */
 
 namespace Magenerds\OptimizeMedia\Api;
